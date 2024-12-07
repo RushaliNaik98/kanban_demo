@@ -20,3 +20,31 @@ class FetchCommentsEvent extends CommentEvent {
 
   FetchCommentsEvent({required this.taskId});
 }
+
+class UpdateCommentEvent extends CommentEvent {
+  final String commentId;
+  final String content; // Updated content
+  final String taskId;
+
+  UpdateCommentEvent({
+    required this.commentId,
+    required this.content,
+    required this.taskId,
+  });
+
+  @override
+  List<Object?> get props => [commentId, content, taskId];
+}
+
+class DeleteCommentEvent extends CommentEvent {
+  final String commentId;
+  final String taskId;
+
+  DeleteCommentEvent({
+    required this.commentId,
+    required this.taskId,
+  });
+
+  @override
+  List<Object?> get props => [commentId, taskId];
+}

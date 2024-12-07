@@ -103,9 +103,9 @@ class KanbanCard extends StatelessWidget {
                         // Display time for "Completed" tasks
                         if (task.description == 'Completed')
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: const EdgeInsets.only(bottom: 8.0, left: 8),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Icon(Icons.access_time,
                                     color: Colors.green),
@@ -125,9 +125,9 @@ class KanbanCard extends StatelessWidget {
                         // Display time for "In Progress" tasks with timer
                         if (task.description == 'In Progress')
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: const EdgeInsets.only(bottom: 8.0, left : 8),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Icon(Icons.timer,
                                     color: Colors.orangeAccent),

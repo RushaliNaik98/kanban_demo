@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Time taken: ${task.duration!.amount.toString()} Min')
                             : Text(task.description ?? ''),
                             Text('Created on: ${formatDate(task.createdAt)}'),
-                            Text('Created on: ${task.priority}')
+                            Text('Priority: ${getPriorityLabel(task.priority ?? 0)}')
                       ]),
                       leading: Icon(
                         _selectedIndex == 1

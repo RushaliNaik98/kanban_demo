@@ -9,6 +9,7 @@ class CommentRepository {
 
   CommentRepository({required this.baseUrl, required this.authToken});
 
+  /// Add a new comment
   Future<AddCommentResponse> addComment(AddCommentRequest request) async {
     final url = Uri.parse('$baseUrl/comments');
     final response = await http.post(
@@ -27,8 +28,9 @@ class CommentRepository {
     }
   }
 
+  /// Get comments for a task
   Future<List<AddCommentResponse>> getComments({required String taskId}) async {
-    final url = 'https://api.todoist.com/rest/v2/comments?task_id=$taskId';
+    final url = '$baseUrl/comments?task_id=$taskId';
     final response = await http.get(
       Uri.parse(url),
       headers: {'Authorization': 'Bearer $authToken'},
@@ -41,4 +43,38 @@ class CommentRepository {
       throw Exception("Failed to fetch comments");
     }
   }
+
+  /// Edit a comment
+  Future<void> editComment({
+  required String commentId, 
+  required String newContent
+}) async {
+  final url = Uri.parse('$baseUrl/comments/$commentId');
+  final response = await http.post(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $authToken',
+    },
+    body: jsonEncode({'content': newContent}),
+  );
+
+  if (response.statusCode != 204) {
+    throw Exception('Failed to edit comment: ${response.body}');
+  }
+}
+
+  /// Delete a comment
+  Future<void> deleteComment({required String commentId}) async {
+  final url = Uri.parse('$baseUrl/comments/$commentId');
+  final response = await http.delete(
+    url,
+    headers: {'Authorization': 'Bearer $authToken'},
+  );
+
+  if (response.statusCode != 204) {
+    throw Exception('Failed to delete comment: ${response.body}');
+  }
+}
+
 }
