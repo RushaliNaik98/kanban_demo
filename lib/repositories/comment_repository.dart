@@ -45,7 +45,7 @@ class CommentRepository {
   }
 
   /// Edit a comment
-  Future<void> editComment({
+  Future<AddCommentResponse> editComment({
   required String commentId, 
   required String newContent
 }) async {
@@ -59,9 +59,11 @@ class CommentRepository {
     body: jsonEncode({'content': newContent}),
   );
 
-  if (response.statusCode != 204) {
-    throw Exception('Failed to edit comment: ${response.body}');
-  }
+  if (response.statusCode == 200 || response.statusCode == 201) {
+      return AddCommentResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to add comment: ${response.body}');
+    }
 }
 
   /// Delete a comment
