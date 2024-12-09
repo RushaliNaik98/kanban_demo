@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_demo/blocs/comment/comment_bloc.dart';
+import 'package:kanban_demo/blocs/theme/theme_bloc.dart';
+import 'package:kanban_demo/blocs/theme/theme_state.dart';
 import 'package:kanban_demo/repositories/comment_repository.dart';
 import 'blocs/task/task_bloc.dart';
 import 'blocs/timer/timer_bloc.dart';
@@ -12,7 +14,6 @@ class MyApp extends StatelessWidget {
   final TaskRepository taskRepository;
   final CommentRepository commentRepository;
 
-  // You can pass other dependencies if needed
   const MyApp({
     Key? key,
     required this.taskRepository,
@@ -27,19 +28,26 @@ class MyApp extends StatelessWidget {
           create: (context) => TaskBloc(taskRepository: taskRepository),
         ),
         BlocProvider<CommentBloc>(
-          create: (context) => CommentBloc(commentRepository: commentRepository),
+          create: (context) =>
+              CommentBloc(commentRepository: commentRepository),
         ),
         BlocProvider<TimerBloc>(
           create: (context) => TimerBloc(),
         ),
-      ],
-      child: MaterialApp(
-        title: 'Kanban Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+        BlocProvider<ThemeBloc>(
+          // Add ThemeBloc here
+          create: (context) => ThemeBloc(),
         ),
-        home: HomeScreen(),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        // Listen for theme changes
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Kanban Demo',
+            theme: state.themeData, // Use the theme from ThemeBloc
+            home: HomeScreen(),
+          );
+        },
       ),
     );
   }

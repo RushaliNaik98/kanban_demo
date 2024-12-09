@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_demo/models/task.dart';
+import 'package:kanban_demo/utils/colors.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../blocs/timer/timer_event.dart';
 import '../../blocs/timer/timer_state.dart';
@@ -13,6 +14,7 @@ class KanbanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return Draggable<Task>(
       data: task,
       feedback: Material(
@@ -22,12 +24,12 @@ class KanbanCard extends StatelessWidget {
           height: 80,
           child: Card(
             elevation: 8,
-            color: Colors.blueGrey.withOpacity(0.7),
+            color: _getCardColorForStatus(context),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
-              title: Text(task.content,
-                  style: const TextStyle(color: Colors.white)),
+              title: Text(capitalize(task.content),
+                  style: const TextStyle(color: Colors.black)),
             ),
           ),
         ),
@@ -37,7 +39,7 @@ class KanbanCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: _getCardColorForStatus(),
+          color: _getCardColorForStatus(context),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -50,10 +52,24 @@ class KanbanCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: Text(capitalize(task.content),
+                title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(capitalize(task.content),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black)),
+                Text(
+                  "Priority: ${getPriorityLabel(task.priority ?? 0)}",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16)),
-            ),
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            )),
             if (task.description == 'In Progress' ||
                 task.description == 'Completed')
               BlocProvider(
@@ -103,19 +119,26 @@ class KanbanCard extends StatelessWidget {
                         // Display time for "Completed" tasks
                         if (task.description == 'Completed')
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0, left: 8),
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, left: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Icon(Icons.access_time,
-                                    color: Colors.green),
+                                Icon(Icons.lock_clock_outlined,
+                                    color: isDarkTheme
+                                        ? const Color(0xfff4b400)
+                                        : Colors.white),
                                 const SizedBox(width: 8),
-                                Text(
-                                  "Time Taken: ${task.duration?.amount == 1 ? 'Less than 1' : task.duration?.amount} Min",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                                Flexible(
+                                  child: Text(
+                                    "Time Taken: ${task.duration?.amount == 1 ? 'Less than 1' : task.duration?.amount} Min",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
                                   ),
                                 ),
                               ],
@@ -125,15 +148,18 @@ class KanbanCard extends StatelessWidget {
                         // Display time for "In Progress" tasks with timer
                         if (task.description == 'In Progress')
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0, left : 8),
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, left: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Icon(Icons.timer,
-                                    color: Colors.orangeAccent),
+                                Icon(Icons.av_timer_outlined,
+                                    color: isDarkTheme
+                                        ? const Color(0xfff4b400)
+                                        : Colors.white),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Time: $timerText",
+                                  "Time: $timerText Mins",
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -166,15 +192,16 @@ class KanbanCard extends StatelessWidget {
   }
 
   // Helper function to get the card color based on task status
-  Color _getCardColorForStatus() {
+  Color _getCardColorForStatus(BuildContext context) {
+    bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     switch (task.description) {
       case 'In Progress':
-        return Colors.blueAccent.withOpacity(0.8); // Blue for In Progress
+        return isDarkTheme ? const Color(0xff4a90e2) : const Color(0xff7bc3f0);
       case 'Completed':
-        return Colors.lightGreen.withOpacity(0.8); // Green for Completed
+        return isDarkTheme ? const Color(0xff1cb878) : const Color(0xff5bd9a6);
       default:
-        return Colors.orangeAccent
-            .withOpacity(0.8); // Orange for default status (e.g., To Do)
+        return isDarkTheme ? const Color(0xffa6a6a6) : const Color(0xffe0e0e0);
     }
   }
 }

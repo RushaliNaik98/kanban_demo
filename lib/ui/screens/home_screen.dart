@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_demo/blocs/task/task_bloc.dart';
 import 'package:kanban_demo/blocs/task/task_event.dart';
 import 'package:kanban_demo/blocs/task/task_state.dart';
+import 'package:kanban_demo/blocs/theme/theme_bloc.dart';
+import 'package:kanban_demo/blocs/theme/theme_event.dart';
+import 'package:kanban_demo/blocs/theme/theme_state.dart';
 import 'package:kanban_demo/ui/widgets/kanban_column.dart';
+import 'package:kanban_demo/utils/colors.dart';
 
 import '../../utils/helpers.dart';
 
@@ -33,150 +37,208 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Kanban Board',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.indigo],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
+      final isDarkMode = themeState is DarkThemeState;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Kanban Board',
+            style: TextStyle(
+                color: AppColors.appNameColor(isDarkMode),
+                fontWeight: FontWeight.bold,
+                fontSize: 20),
           ),
+          centerTitle: true,
+          backgroundColor: AppColors.backgroundColor(isDarkMode),
+          actions: [
+            IconButton(
+                icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                    color: AppColors.appNameColor(isDarkMode)),
+                onPressed: () {
+                  context.read<ThemeBloc>().add(ToggleThemeEvent(!isDarkMode));
+                })
+          ],
         ),
-        child: BlocBuilder<TaskBloc, TaskState>(
-          builder: (context, state) {
-            if (_selectedIndex == 0) {
-              // Show Kanban columns for "Home" tab
-              return const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      KanbanColumn(
-                        columnTitle: "To Do",
-                        status: "To Do",
-                        color: Colors
-                            .orangeAccent, // Adjusted to a more vibrant orange
-                        icon: Icons.task,
-                        titleColor: Colors.black, // Darker color for title text
-                        iconColor: Colors.black, // Darker icon color
-                      ),
-                      SizedBox(width: 16),
-                      KanbanColumn(
-                        columnTitle: "In Progress",
-                        status: "In Progress",
-                        color: Colors.blueAccent, // Lively blue
-                        icon: Icons.sync,
-                        titleColor:
-                            Colors.white, // White title for better contrast
-                        iconColor:
-                            Colors.white, // White icon color for readability
-                      ),
-                      SizedBox(width: 16),
-                      KanbanColumn(
-                        columnTitle: "Done",
-                        status: "Completed",
-                        color: Colors.lightGreen, // Fresh green
-                        icon: Icons.check_circle,
-                        titleColor:
-                            Colors.white, // White title for better contrast
-                        iconColor:
-                            Colors.white, // White icon color for readability
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else if (state is TaskLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TaskLoaded) {
-              // Filter tasks based on the selected status
-              final filteredTasks = state.tasks
-                  .where(
-                      (task) => task.description == _statuses[_selectedIndex])
-                  .toList();
-
-              return ListView.builder(
-                padding: const EdgeInsets.all(16.0),
-                itemCount: filteredTasks.length,
-                itemBuilder: (context, index) {
-                  final task = filteredTasks[index];
-                  return Card(
-                    color: Colors.white,
-                    child: ListTile(
-                      title: Text(
-                        task.content,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        task.description == 'Completed'
-                            ? Text(
-                                'Time taken: ${task.duration!.amount.toString()} Min')
-                            : Text(task.description ?? ''),
-                            Text('Created on: ${formatDate(task.createdAt)}'),
-                            Text('Priority: ${getPriorityLabel(task.priority ?? 0)}')
-                      ]),
-                      leading: Icon(
-                        _selectedIndex == 1
-                            ? Icons.task
-                            : _selectedIndex == 2
-                                ? Icons.sync 
-                                : Icons.check_circle,
-                        color: _selectedIndex == 1
-                            ? Colors.orangeAccent
-                            : _selectedIndex == 2
-                                ? Colors.blueAccent
-                                : Colors.lightGreen,
-                      ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                AppColors.backgroundBodyGradientHigh(isDarkMode),
+                AppColors.backgroundBodyGradientLow(isDarkMode),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: BlocBuilder<TaskBloc, TaskState>(
+            builder: (context, state) {
+              if (_selectedIndex == 0) {
+                // Show Kanban columns for "Home" tab
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        KanbanColumn(
+                          columnTitle: "To Do",
+                          status: "To Do",
+                          color: AppColors.todoColor(isDarkMode),
+                          icon: Icons.task,
+                          titleColor: AppColors.statusTextColor(isDarkMode),
+                          iconColor: AppColors.statusTextColor(isDarkMode),
+                        ),
+                        const SizedBox(width: 16),
+                        KanbanColumn(
+                          columnTitle: "In Progress",
+                          status: "In Progress",
+                          color: AppColors.inProgressColor(isDarkMode),
+                          icon: Icons.sync,
+                          titleColor: AppColors.statusTextColor(isDarkMode),
+                          iconColor: AppColors.statusTextColor(isDarkMode),
+                        ),
+                        const SizedBox(width: 16),
+                        KanbanColumn(
+                          columnTitle: "Done",
+                          status: "Completed",
+                          color: AppColors.completedColor(isDarkMode),
+                          icon: Icons.check_circle,
+                          titleColor: AppColors.statusTextColor(isDarkMode),
+                          iconColor: AppColors.statusTextColor(isDarkMode),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              );
-            } else {
-              return const Center(child: Text('Failed to load tasks'));
-            }
-          },
+                  ),
+                );
+              } else if (state is TaskLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is TaskLoaded) {
+                // Filter tasks based on the selected status
+                final filteredTasks = state.tasks
+                    .where(
+                        (task) => task.description == _statuses[_selectedIndex])
+                    .toList();
+
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: filteredTasks.length,
+                  itemBuilder: (context, index) {
+                    final task = filteredTasks[index];
+                    return Card(
+                      color: Colors.white,
+                      child: ListTile(
+                        title: Text(
+                          task.content,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        subtitle: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              task.description == 'Completed'
+                                  ? Text(
+                                      'Time taken: ${task.duration!.amount.toString()} Min',
+                                      style:
+                                          const TextStyle(color: Colors.black))
+                                  : Text(task.description ?? '',
+                                      style:
+                                          const TextStyle(color: Colors.black)),
+                              Text('Created on: ${formatDate(task.createdAt)}',
+                                  style: const TextStyle(color: Colors.black)),
+                              Text(
+                                  'Priority: ${getPriorityLabel(task.priority ?? 0)}',
+                                  style: const TextStyle(color: Colors.black))
+                            ]),
+                        leading: Icon(
+                          _selectedIndex == 1
+                              ? Icons.task
+                              : _selectedIndex == 2
+                                  ? Icons.sync
+                                  : Icons.check_circle,
+                          color: _selectedIndex == 1
+                              ? Colors.orangeAccent
+                              : _selectedIndex == 2
+                                  ? Colors.blueAccent
+                                  : Colors.lightGreen,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(child: Text('Failed to load tasks'));
+              }
+            },
+          ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          onTap: _onTabSelected,
+          backgroundColor: AppColors.backgroundColor(isDarkMode),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white54,
+          items:  [
+            BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 8.0), // Add spacing to the top
+        child: _buildGradientIcon(Icons.home, _selectedIndex == 0, isDarkMode),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        // fixedColor: Colors.deepPurple,
-        currentIndex: _selectedIndex,
-        onTap: _onTabSelected,
-        backgroundColor: Colors.deepPurple,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white54,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task),
-            label: 'To Do',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sync),
-            label: 'In Progress',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle),
-            label: 'Completed',
-          ),
-        ],
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 8.0), // Add spacing to the top
+        child: _buildGradientIcon(Icons.task, _selectedIndex == 1,isDarkMode),
       ),
-    );
+      label: 'To Do',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 8.0), // Add spacing to the top
+        child: _buildGradientIcon(Icons.sync, _selectedIndex == 2,isDarkMode),
+      ),
+      label: 'In Progress',
+    ),
+    BottomNavigationBarItem(
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 8.0), // Add spacing to the top
+        child: _buildGradientIcon(Icons.check_circle, _selectedIndex == 3,isDarkMode),
+      ),
+      label: 'Completed',
+    ),
+          ],
+        ),
+      );
+    });
   }
+  
 }
+
+Widget _buildGradientIcon(IconData icon, bool isSelected, bool isDarkTheme) {
+  return ShaderMask(
+    shaderCallback: (bounds) {
+      return LinearGradient(
+        colors: isSelected
+            ? (isDarkTheme
+                ? [Colors.deepPurpleAccent, Colors.blueAccent] // Dark theme gradient
+                : [Colors.white, Colors.white]) // Light theme gradient
+            : (isDarkTheme
+                ? [Colors.grey, Colors.white54] // Dark theme unselected gradient
+                : [Colors.white, Colors.white]), // Light theme unselected gradient
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(bounds);
+    },
+    child: Icon(
+      icon,
+      size: 24,
+      color: Colors.white, // Fallback color if ShaderMask fails
+    ),
+  );
+}
+
+
+
