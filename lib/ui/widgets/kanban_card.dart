@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_demo/models/task.dart';
 import 'package:kanban_demo/utils/colors.dart';
+import '../../blocs/task/task_bloc.dart';
+import '../../blocs/task/task_event.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../blocs/timer/timer_event.dart';
 import '../../blocs/timer/timer_state.dart';
@@ -52,24 +54,52 @@ class KanbanCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-                title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(capitalize(task.content),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black)),
-                Text(
-                  "Priority: ${getPriorityLabel(task.priority ?? 0)}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14,
+              contentPadding: const EdgeInsets.only(left: 16, right: 4.0),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          capitalize(task.content),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "Priority: ${getPriorityLabel(task.priority ?? 0)}",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )),
+                  IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: isDarkTheme ? Colors.white : Colors.grey[800],
+                    ),
+                    onPressed: () {
+                      final int? taskId = int.tryParse(task.id ?? '');
+                      if (taskId != null) {
+                        context
+                            .read<TaskBloc>()
+                            .add(DeleteTaskEvent(taskId: taskId));
+                      } else {
+                        print("Error: Task ID is invalid or null");
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
             if (task.description == 'In Progress' ||
                 task.description == 'Completed')
               BlocProvider(

@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final task = filteredTasks[index];
                     return Card(
-                      color: Colors.white,
+                      color: AppColors.tileColor(isDarkMode),
                       child: ListTile(
                         title: Text(
                           task.content,
@@ -157,11 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               : _selectedIndex == 2
                                   ? Icons.sync
                                   : Icons.check_circle,
-                          color: _selectedIndex == 1
-                              ? Colors.orangeAccent
-                              : _selectedIndex == 2
-                                  ? Colors.blueAccent
-                                  : Colors.lightGreen,
+                          color:  AppColors.tileIconColor(isDarkMode),
                         ),
                       ),
                     );

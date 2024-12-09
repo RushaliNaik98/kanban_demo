@@ -206,7 +206,8 @@ class EditTaskScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Save Button
-            Center(
+            Align(
+              alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () async {
                   if (titleController.text.isEmpty) {

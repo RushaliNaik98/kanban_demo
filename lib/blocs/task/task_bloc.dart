@@ -98,6 +98,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoading());
       await taskRepository.deleteTask(event.taskId);
       emit(TaskDeleted(taskId: event.taskId));
+      add(FetchTasksEvent());
     } catch (_) {
       emit(TaskError(message: "Failed to delete task"));
     }

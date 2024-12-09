@@ -8,7 +8,7 @@ class AppColors {
   static Color columnColor(bool isDarkMode) =>
       isDarkMode ? const Color(0xff221c44) : Colors.white;
   static Color todoColor(bool isDarkMode) =>
-      isDarkMode ? const Color(0xff949494): const Color(0xff949494);
+      isDarkMode ? const Color(0xff949494) : const Color(0xff949494);
   static Color inProgressColor(bool isDarkMode) =>
       isDarkMode ? const Color(0xff3eaced) : const Color(0xff3eaced);
   static Color completedColor(bool isDarkMode) =>
@@ -16,9 +16,9 @@ class AppColors {
   static Color backgroundColor(bool isDarkMode) =>
       isDarkMode ? const Color(0xff1d0539) : Colors.deepPurple;
   static Color backgroundBodyGradientHigh(bool isDarkMode) =>
-      isDarkMode ? const Color(0xff1d0539): const Color(0xfff0e7f6);
+      isDarkMode ? const Color(0xff1d0539) : const Color(0xfff0e7f6);
   static Color backgroundBodyGradientLow(bool isDarkMode) =>
-      isDarkMode ? const Color(0xff101213): const Color(0xffc9b1d6);
+      isDarkMode ? const Color(0xff101213) : const Color(0xffc9b1d6);
   static Color statusTextColor(bool isDarkMode) =>
       isDarkMode ? Colors.white : Colors.white;
 
@@ -33,4 +33,10 @@ class AppColors {
 
   static Color iconColor(bool isDarkMode) =>
       isDarkMode ? Colors.white : Colors.black;
+  static Color innerScreenTextColor(bool isDarkMode) =>
+      isDarkMode ? Colors.white : Colors.black;
+  static Color tileColor(bool isDarkMode) =>
+      isDarkMode ? Colors.grey : Colors.white;
+  static Color tileIconColor(bool isDarkMode) =>
+      isDarkMode ? const Color(0xff1d0539) : Colors.deepPurple;
 }

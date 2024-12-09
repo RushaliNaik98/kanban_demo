@@ -101,10 +101,8 @@ class TaskRepository {
     try {
       final response = await http.delete(url, headers: headers);
 
-      if (response.statusCode == 204) {
-        print("Task with ID $taskId deleted");
-      } else {
-        throw Exception('Failed to delete task: ${response.statusCode}');
+      if (response.statusCode != 204) {
+        throw Exception('Failed to delete comment: ${response.body}');
       }
     } catch (e) {
       throw Exception('Failed to delete task: $e');
