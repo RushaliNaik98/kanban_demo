@@ -1,0 +1,25 @@
+{
+  "appName": "Kanban-Tafel",
+  "@appName": {
+    "description": "appName"
+  },
+  "active": "Aktiv",
+  "toDo": "Zu Erledigen",
+  "inProgress": "In Bearbeitung",
+  "done": "Erledigt",
+  "priority": "Priorität",
+  "time": "Zeit",
+  "timeTaken": "Benötigte Zeit",
+  "home": "Startseite",
+  "analytics": "Analysen",
+  "createOn": "Erstellt Am",
+  "addTaskTo": "Aufgabe Hinzufügen Zu",
+  "taskTitle": "Aufgabentitel",
+  "editTitle": "Titel Bearbeiten",
+  "comments": "Kommentare",
+  "addComments": "Kommentare Hinzufügen",
+  "add": "Hinzufügen",
+  "save": "Speichern",
+  "projectName": "Smart City App-Projekt",
+  "projectDetails": "Smart City App-Entwicklungsprojekt\nSprint: 10. Dezember – 20. Januar 2025"
+}
