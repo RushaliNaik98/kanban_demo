@@ -56,8 +56,41 @@ flutter pub get
 flutter run (Mobile)
 flutter run -d chrome
 
+#Video
+
+##Mobile
+
+
+##Web
+
+
 
 ## Few ScreenShots
-![alt text](<Simulator Screenshot - iPhone 15 Pro Max - 2024-12-11 at 00.57.09.png>)
-![alt text](<Simulator Screenshot - iPhone 15 Pro Max - 2024-12-11 at 00.57.12.png>)
+<img width="362" alt="Screenshot 2024-12-11 at 1 23 09 AM" src="https://github.com/user-attachments/assets/b74e56ba-77f6-43ad-ae09-7fe589539187">
+<img width="371" alt="Screenshot 2024-12-11 at 1 24 42 AM" src="https://github.com/user-attachments/assets/0e2d8822-deba-4313-aa51-a698cf29e531">
+German Theme
+
+<img width="367" alt="Screenshot 2024-12-11 at 1 25 57 AM" src="https://github.com/user-attachments/assets/c7f43473-27c0-4467-b506-0c506bc29776">
+
+Additional Screens
+
+<img width="360" alt="Screenshot 2024-12-11 at 1 26 36 AM" src="https://github.com/user-attachments/assets/999ecfa0-d591-4608-9d63-5bca594918c3">
+<img width="381" alt="Screenshot 2024-12-11 at 1 26 57 AM" src="https://github.com/user-attachments/assets/b2ece451-fd32-456e-9ef6-70c9ce4fffba">
+<img width="368" alt="Screenshot 2024-12-11 at 1 29 13 AM" src="https://github.com/user-attachments/assets/9caee0a1-f083-49ef-a3af-47ba5967d029">
+<img width="369" alt="Screenshot 2024-12-11 at 1 31 49 AM" src="https://github.com/user-attachments/assets/97d0107c-5b2d-4b49-ab82-d0ad704bc674">
+<img width="366" alt="Screenshot 2024-12-11 at 1 33 13 AM" src="https://github.com/user-attachments/assets/973e5e8a-c84f-4673-b162-30a6015805a1">
+
+Web Theme
+<img width="1009" alt="Screenshot 2024-12-11 at 1 35 01 AM" src="https://github.com/user-attachments/assets/db7b7348-868f-4a23-b72f-767221423e83">
+
+
+
+
+
+
+
+
+
+
+
 
