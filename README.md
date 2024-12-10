@@ -61,7 +61,16 @@ flutter run -d chrome
 ##Mobile
 
 
+Uploading trimmed (3).mp4…
+
+
+
 ##Web
+
+
+https://github.com/user-attachments/assets/26e9d6de-9a15-4333-86e7-a586e618aa76
+
+
 
 
 
