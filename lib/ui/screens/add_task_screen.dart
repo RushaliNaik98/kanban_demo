@@ -7,6 +7,7 @@ import '../../blocs/theme/theme_bloc.dart';
 import '../../blocs/theme/theme_state.dart';
 import '../../models/task.dart';
 import '../../utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final String columnTitle;
@@ -55,7 +56,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       color: AppColors.innerScreenTextColor(isDarkMode),
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
-                  labelText: "Task Title",
+                  labelText: AppLocalizations.of(context)!.taskTitle,
                   hintText: "Enter task title",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0), // Rounded border
@@ -83,7 +84,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   }
                 },
                 decoration: InputDecoration(
-                  labelText: "Priority",
+                  labelText: AppLocalizations.of(context)!.priority,
                   labelStyle: TextStyle(
                       color: AppColors.innerScreenTextColor(isDarkMode),
                       fontWeight: FontWeight.bold,
@@ -134,9 +135,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: const Text(
-                    "Add",
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.add,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0),

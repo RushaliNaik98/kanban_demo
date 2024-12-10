@@ -1,0 +1,25 @@
+{
+  "appName": "Kanban Board",
+  "@appName": {
+    "description": "appName"
+  },
+  "active": "Active",
+  "toDo": "To Do",
+  "inProgress": "In Progress",
+  "done": "Done",
+  "priority": "Priority",
+  "time": "Time",
+  "timeTaken": "Time Taken",
+  "home": "Home",
+  "analytics": "Analytics",
+  "createOn": "Created On",
+  "addTaskTo": "Add Task To",
+  "taskTitle": "Task Title",
+  "editTitle": "Edit Title",
+  "comments": "Comments",
+  "addComments": "Add Comments",
+  "add": "Add",
+  "save": "Save",
+  "projectName": "Smart City App Project",
+  "projectDetails": "Smart City App Development Project\nSprint: Dec 10 - Jan 20 2025",
+}

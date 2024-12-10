@@ -9,6 +9,7 @@ import '../../blocs/task/task_event.dart';
 import '../../models/comment.dart';
 import '../../models/task.dart';
 import '../../utils/helpers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Import your required models, blocs, and utility functions here.
 
@@ -31,7 +32,7 @@ class EditTaskScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Task'),
+        title: const Text('Task'),
         backgroundColor: Colors.deepPurple,
       ),
       body: SingleChildScrollView(
@@ -41,7 +42,7 @@ class EditTaskScreen extends StatelessWidget {
           children: [
             // Task Title
             Text(
-              task.description == 'To Do' ? "Edit Title:" : "Title",
+              task.description == 'To Do' ? "${AppLocalizations.of(context)!.editTitle}:" : "Title",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -71,7 +72,7 @@ class EditTaskScreen extends StatelessWidget {
                   }
                 },
                 decoration: InputDecoration(
-                  labelText: "Priority",
+                  labelText: AppLocalizations.of(context)!.priority,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -87,8 +88,8 @@ class EditTaskScreen extends StatelessWidget {
 
             // Comments Section
             if (task.commentCount! > 0)
-              const Text(
-                "Comments",
+               Text(
+                AppLocalizations.of(context)!.comments,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -187,8 +188,8 @@ class EditTaskScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Add Comment
-            const Text(
-              "Add Comment:",
+             Text(
+              "${AppLocalizations.of(context)!.addComments}:",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             TextFormField(
@@ -266,7 +267,7 @@ class EditTaskScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
                   ),
                 ),
-                child: const Text("Save"),
+                child:  Text(AppLocalizations.of(context)!.save),
               ),
             ),
           ],

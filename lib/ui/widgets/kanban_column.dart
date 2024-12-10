@@ -8,6 +8,7 @@ import '../../blocs/task/task_state.dart';
 import '../../blocs/theme/theme_bloc.dart';
 import '../../blocs/theme/theme_state.dart';
 import '../../utils/colors.dart';
+import '../../utils/helpers.dart';
 import '../screens/add_task_screen.dart';
 import '../screens/edit_task_screen.dart';
 import 'kanban_card.dart';
@@ -19,6 +20,7 @@ class KanbanColumn extends StatelessWidget {
   final IconData icon;
   final Color titleColor; // Added color for the column title
   final Color iconColor; // Added color for the icon
+  final Locale? locale;
 
   const KanbanColumn({
     required this.columnTitle,
@@ -27,11 +29,13 @@ class KanbanColumn extends StatelessWidget {
     required this.icon,
     required this.titleColor, // Initialize titleColor
     required this.iconColor, // Initialize iconColor
+    this.locale
+
   });
 
   @override
   Widget build(BuildContext context) {
-    Size size= MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
       final isDarkMode = themeState is DarkThemeState;
       return Container(
@@ -54,6 +58,7 @@ class KanbanColumn extends StatelessWidget {
           children: [
             // Column Header with Title and Add Task Button
             Container(
+              height: 70,
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
                 color: color,
@@ -65,20 +70,24 @@ class KanbanColumn extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Icon(icon, color: iconColor),
-                      const SizedBox(width: 8),
-                      Text(
-                        columnTitle,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              titleColor, // Use titleColor for the title text
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(icon, color: iconColor),
+                        const SizedBox(width: 4),
+                        Text(
+                          columnTitle,
+                          style: TextStyle(
+                            fontSize:  locale?.languageCode == 'en' ? 18 : 14,
+                            fontWeight: FontWeight.bold,
+                            color: titleColor,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          softWrap: true,
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                   Visibility(
                     visible: status == 'To Do',
@@ -95,6 +104,7 @@ class KanbanColumn extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

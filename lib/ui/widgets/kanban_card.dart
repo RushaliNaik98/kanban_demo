@@ -8,6 +8,7 @@ import '../../blocs/timer/timer_bloc.dart';
 import '../../blocs/timer/timer_event.dart';
 import '../../blocs/timer/timer_state.dart';
 import '../../utils/helpers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class KanbanCard extends StatelessWidget {
   final Task task;
@@ -23,7 +24,7 @@ class KanbanCard extends StatelessWidget {
         color: Colors.transparent,
         child: SizedBox(
           width: 200,
-          height: 80,
+          // height: 80,
           child: Card(
             elevation: 8,
             color: _getCardColorForStatus(context),
@@ -71,7 +72,8 @@ class KanbanCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Priority: ${getPriorityLabel(task.priority ?? 0)}",
+                          "${AppLocalizations.of(context)!
+                          .priority}: ${getPriorityLabel(task.priority ?? 0)}",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.normal,

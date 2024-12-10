@@ -39,4 +39,6 @@ class AppColors {
       isDarkMode ? Colors.grey : Colors.white;
   static Color tileIconColor(bool isDarkMode) =>
       isDarkMode ? const Color(0xff1d0539) : Colors.deepPurple;
+  static Color statusBarTextColor(bool isDarkMode) =>
+      isDarkMode ? Colors.white : const Color(0xff1d0539);
 }
