@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_demo/blocs/task/task_bloc.dart';
 import 'package:kanban_demo/blocs/task/task_event.dart';
 import 'package:kanban_demo/models/task.dart';
+import 'package:kanban_demo/utils/responsive.dart';
 
 import '../../blocs/task/task_state.dart';
 import '../../blocs/theme/theme_bloc.dart';
@@ -39,7 +40,7 @@ class KanbanColumn extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, themeState) {
       final isDarkMode = themeState is DarkThemeState;
       return Container(
-        width: size.width * 0.5,
+        width:Responsive.isDesktop(context) ? size.width * 0.3 : size.width * 0.5,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         decoration: BoxDecoration(
           color: AppColors.columnColor(isDarkMode),

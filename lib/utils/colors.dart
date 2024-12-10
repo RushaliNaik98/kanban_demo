@@ -16,7 +16,7 @@ class AppColors {
   static Color backgroundColor(bool isDarkMode) =>
       isDarkMode ? const Color(0xff1d0539) : Colors.deepPurple;
   static Color backgroundBodyGradientHigh(bool isDarkMode) =>
-      isDarkMode ? const Color(0xff1d0539) : const Color(0xfff0e7f6);
+      isDarkMode ?  Colors.black : const Color(0xfff0e7f6);
   static Color backgroundBodyGradientLow(bool isDarkMode) =>
       isDarkMode ? const Color(0xff101213) : const Color(0xffc9b1d6);
   static Color statusTextColor(bool isDarkMode) =>

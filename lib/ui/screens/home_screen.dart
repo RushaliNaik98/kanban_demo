@@ -9,6 +9,7 @@ import 'package:kanban_demo/blocs/theme/theme_event.dart';
 import 'package:kanban_demo/blocs/theme/theme_state.dart';
 import 'package:kanban_demo/ui/widgets/kanban_column.dart';
 import 'package:kanban_demo/utils/colors.dart';
+import 'package:kanban_demo/utils/responsive.dart';
 
 import '../../utils/helpers.dart';
 import '../widgets/task_progress_bar.dart';
@@ -151,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 16),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
@@ -178,7 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(16),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: Responsive.isDesktop(context) ? MainAxisAlignment.center: MainAxisAlignment.center,
+                                crossAxisAlignment:Responsive.isDesktop(context) ?CrossAxisAlignment.center : CrossAxisAlignment.start,
                                 children: [
                                   KanbanColumn(
                                     columnTitle:
