@@ -1,3 +1,4 @@
+
 # TaskFlow: Your Ultimate Kanban Companion
 
 Transform the way you manage tasks with TaskFlow, a beautifully designed Flutter app that brings the power of Kanban to your fingertips!
@@ -59,19 +60,14 @@ flutter run -d chrome
 #Video
 
 ##Mobile
+The quality of the video is not good as Github doesnt allow files size more than 10MB
 
-
-Uploading trimmed (3).mp4…
-
+https://github.com/user-attachments/assets/f93c16c1-02e3-4b11-9b2e-130e8eafbf3d
 
 
 ##Web
 
-
 https://github.com/user-attachments/assets/26e9d6de-9a15-4333-86e7-a586e618aa76
-
-
-
 
 
 ## Few ScreenShots
